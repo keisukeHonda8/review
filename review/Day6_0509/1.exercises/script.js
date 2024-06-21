@@ -1,6 +1,45 @@
 "use strict";
 // 1行目に記載している 'use strict' は削除しないでください
-
+//func
+function checkNumber(argument) {
+  if (typeof argument !== "number") {
+    return true;
+  } else {
+    return false;
+  }
+}
+//func
+function checkString(argument) {
+  if (typeof argument !== "string") {
+    return true;
+  } else {
+    return false;
+  }
+}
+//func
+function checkBoolean(argument) {
+  if (typeof argument !== "boolean") {
+    return true;
+  } else {
+    return false;
+  }
+}
+//func
+function checkRange(argument) {
+  if (argument > 100 || 0 > argument) {
+    return true;
+  } else {
+    return false;
+  }
+}
+//func
+function checkEmpty(argument) {
+  if (argument !== "") {
+    return true;
+  } else {
+    return false;
+  }
+}
 /* from here */
 /* テスト駆動開発（Test-driven Development [TDD]） Warmup */
 /* 1. 関数: compareTwoNumbers を宣言してください。*/
@@ -141,27 +180,6 @@ function anotherGreeting(name, sanYesOrNo, HelloGoodbye) {
   }
   return greeting + name + san;
 }
-//func
-function checkNumber(argument) {
-  if (typeof argument !== "number") {
-    // throw new Error("引数は数値である必要があります");
-    return true;
-  }
-}
-//func
-function checkString(argument) {
-  if (typeof argument !== "string") {
-    // throw new Error("引数は文字列である必要があります");
-    return true;
-  }
-}
-//func
-function checkBoolean(argument) {
-  if (typeof argument !== "boolean") {
-    // throw new Error("引数はBooleanである必要があります");
-    return true;
-  }
-}
 //test
 test(anotherGreeting(true, false, true), "無効な入力値です！");
 test(anotherGreeting("Sam", true, 0), "無効な入力値です！");
@@ -221,12 +239,7 @@ function getGrade(score) {
     return "F";
   }
 }
-//func
-function checkRange(argument) {
-  if (argument > 100 || 0 > argument) {
-    return true;
-  }
-}
+
 //test
 test(getGrade(101), "無効な点数です。");
 test(getGrade(0), "F");
@@ -286,6 +299,82 @@ function getBestScore(grade) {
 //test
 test(getBestScore(3), "無効な成績です。");
 test(getBestScore(true), "無効な成績です。");
+console.log(`-----------------------------`);
 
 /* 応用演習 */
 /* 1.|| 演算子を使用せずに、|| のように機能する関数 or を宣言してください。 */
+//JSDoc
+/**
+ * @param {any} operand1 - １つめの被演算子
+ * @param {any} operand2 - ２つめの被演算子
+ * @returns {any} ２つの被演算子を与えられた順番のまま || で評価したときと同じ結果
+ *                さらに || 演算子の挙動に近づけるために、次のテストもパスするように変更する
+ */
+//func
+function or(operand1, operand2) {
+  if (!operand1 && !operand2) {
+    if (checkString(operand1) === false && checkEmpty(operand1) === false) {
+      return operand1;
+    } else if (
+      checkString(operand2) === false &&
+      checkEmpty(operand2) === false
+    ) {
+      return operand2;
+    }
+    return false;
+  } else if (checkString(operand1) === false && checkEmpty(operand1) === true) {
+    return operand1;
+  } else if (checkString(operand2) === false && checkEmpty(operand2) === true) {
+    return operand2;
+  } else {
+    return true;
+  }
+}
+//test
+test(or(true, true), true);
+test(or(true, false), true);
+test(or(false, false), false);
+test(or("bananas", false), "bananas");
+test(or("", "bananas"), "bananas");
+test(or("", ""), "");
+test(or("bananas", ""), "bananas");
+test(or("bananas", true), "bananas");
+test(or(true, "bananas"), "bananas");
+test(or("", false), "");
+test(or(false, ""), "");
+console.log(`-----------------------------`);
+
+/* 2.&& 演算子を使用せずに、&& のように機能する関数 and を宣言してください。*/
+//JSDoc
+/**
+ * @param {any} operand1 - 1 つめの被演算子
+ * @param {any} operand2 - 2 つめの被演算子
+ * @returns {any} 2 つの被演算子を与えられた順番のまま && で評価したときと同じ結果
+ *                さらに && 演算子の挙動に近づけるために、次のテストもパスするように変更する
+ */
+//func
+function and(operand1, operand2) {
+  if (!operand1 || !operand2) {
+    if (checkString(operand1) === false && checkEmpty(operand1) === false) {
+      return operand1;
+    } else if (
+      checkString(operand2) === false &&
+      checkEmpty(operand2) === false
+    ) {
+      return operand2;
+    }
+    return false;
+  } else if (checkString(operand1) === false && checkEmpty(operand1) === true) {
+    return operand1;
+  } else if (checkString(operand2) === false && checkEmpty(operand2) === true) {
+    return operand2;
+  } else {
+    return true;
+  }
+}
+//test
+test(and(true, true), true);
+test(and(true, false), false);
+test(and("bananas", false), false);
+test(and("", "bananas"), "");
+console.log(`-----------------------------`);
