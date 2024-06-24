@@ -86,3 +86,98 @@ function getSimpleNumberName(zeroTenNumber) {
 //test
 test(getSimpleNumberName(0), "zero");
 test(getSimpleNumberName("three"), "Invalid Input.");
+
+/* 4.関数 getPolygonName を宣言してください。 */
+//JSDoc
+/**
+ * @param {number} angles - 正多角形の辺の数 (3-8)
+ * @returns {"triangle"|"square"|"pentagon"|"hexagon"|"heptagon"|"octagon"} 与えられた数の辺を持つ正多角形の英語名
+ */
+//func
+function getPolygonName(angles) {
+  switch (angles) {
+    case 3:
+      return "triangle";
+    case 4:
+      return "square";
+    case 5:
+      return "pentagon";
+    case 6:
+      return "hexagon";
+    case 7:
+      return "heptagon";
+    case 8:
+      return "octagon";
+    default:
+      return "Invalid Input.";
+  }
+}
+
+//test
+test(getPolygonName(3), "triangle");
+test(getPolygonName(4), "square");
+test(getPolygonName(5), "pentagon");
+test(getPolygonName(6), "hexagon");
+test(getPolygonName(7), "heptagon");
+test(getPolygonName(8), "octagon");
+test(getPolygonName(9), "Invalid Input.");
+test(getPolygonName("three"), "Invalid Input.");
+console.log(`-----------------------------`);
+
+/* 中級演習 */
+/* 1. 関数 getTimeOfDay を宣言してください。
+      4:00  AM から - 12:00 PM の間（12:00 は除く） : morning
+      12:00 PM から - 5:00  PM の間（5:00 は除く）  : afternoon
+      5:00  PM から - 8:30  PM の間（8:30 は除く）  : evening
+      8:30  PM から - 4:00  AM の間（4:00 は除く）  : night
+*/
+//JSDoc
+/**
+ * @param {1|2|3|4|5|6|7|8|9|10|11|12} hours - 時 (12時間制)
+ * @param {number} minutes - 分
+ * @param {"AM"|"PM"} amOrPm - "AM" または "PM"
+ * @returns {"morning"|"afternoon"|"evening"|"night"} 大まかな「時間帯」
+ */
+//func
+function getTimeOfDay(hours, minutes, amOrPm) {
+  if (
+    checkNumber(hours) === true &&
+    checkNumber(minutes) === true &&
+    checkString(amOrPm) === true
+  ) {
+    return "Invalid Input.";
+  } else if (amOrPm === "AM" && hours >= 4 && hours < 12) {
+    return "morning";
+  } else if (
+    amOrPm === "PM" &&
+    ((hours >= 12 && hours < 13) || (hours >= 1 && hours < 5))
+  ) {
+    return "afternoon";
+  } else if (
+    amOrPm === "PM" &&
+    ((hours >= 5 && hours < 8) || (hours === 8 && minutes < 30))
+  ) {
+    return "evening";
+  } else if (
+    hours >= 8 ||
+    (amOrPm === "PM" && hours === 8 && minutes >= 30 && hours < 12) ||
+    (amOrPm === "AM" &&
+      ((hours >= 12 && hours < 13) || (hours >= 1 && hours < 4)))
+  ) {
+    return "night";
+  }
+}
+
+//test
+test(getTimeOfDay(4, 0, "AM"), "morning");
+test(getTimeOfDay(12, 0, "PM"), "afternoon");
+test(getTimeOfDay(12, 59, "PM"), "afternoon");
+test(getTimeOfDay(1, 0, "PM"), "afternoon");
+test(getTimeOfDay(4, 59, "PM"), "afternoon");
+test(getTimeOfDay(5, 0, "PM"), "evening");
+test(getTimeOfDay(7, 0, "PM"), "evening");
+test(getTimeOfDay(8, 0, "PM"), "evening");
+test(getTimeOfDay(8, 29, "PM"), "evening");
+test(getTimeOfDay(8, 30, "PM"), "night");
+test(getTimeOfDay(12, 0, "AM"), "night");
+test(getTimeOfDay(3, 59, "AM"), "night");
